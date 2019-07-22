@@ -348,7 +348,7 @@ class Example(Frame):
         if self.debug:
             print("Action Track: executeCursorCommand")
         content = self.getText()
-        print("***INFO*** Command:"+command)
+        #print("***INFO*** Command:"+command)
         try:
             firstSelection_index = self.text.index(SEL_FIRST)
             cursor_index = self.text.index(SEL_LAST)
@@ -356,7 +356,7 @@ class Example(Frame):
             followHalf_content = self.text.get(firstSelection_index, "end-1c")
             selected_string = self.text.selection_get()
 
-            print("***INFo***  selected_string ", selected_string)
+            #print("***INFo***  selected_string ", selected_string)
 
             if re.match(self.entityRe,selected_string) != None :
                 ## if have selected entity
@@ -492,7 +492,7 @@ class Example(Frame):
 
 
     def replaceString(self, content, string, replaceType, cursor_index):
-        print ("***INFO*** in replace string")
+        #print ("***INFO*** in replace string")
         if replaceType in self.pressCommand:
             new_string = "[@" + string + "#" + self.pressCommand[replaceType] + "*]"
             newcursor_index = cursor_index.split('.')[0]+"."+str(int(cursor_index.split('.')[1])+len(self.pressCommand[replaceType])+5)
@@ -767,7 +767,7 @@ class Example(Frame):
             tkMessageBox.showerror("Export error!", out_error)
 
             return -1
-        fileLines = open(self.fileName, 'rU').readlines()
+        fileLines = open(self.fileName, 'r').readlines()
         lineNum = len(fileLines)
         new_filename = self.fileName.split('.ann')[0]+ '.anns'
         seqFile = open(new_filename, 'w')
@@ -780,7 +780,8 @@ class Example(Frame):
                     line = removeRecommendContent(line, self.recommendRe)
                 wordTagPairs = getWordTagPairs(line, self.seged, self.tagScheme, self.onlyNP, self.goldAndrecomRe)
                 for wordTag in wordTagPairs:
-                    seqFile.write(wordTag)
+                    print( "***INFO***", wordTag)
+                    seqFile.write(wordTag.decode('utf-8'))
                 ## use null line to seperate sentences
                 seqFile.write('\n')
         seqFile.close()
@@ -801,7 +802,9 @@ def getConfigList():
     return list(filteredFileNames)
 
 def getWordTagPairs(tagedSentence, seged=True, tagScheme="BMES", onlyNP=False, entityRe=r'\[\@.*?\#.*?\*\]'):
-    newSent = tagedSentence.strip('\n').decode('utf-8')
+    #newSent = tagedSentence.strip('\n').decode('utf-8')
+    newSent = tagedSentence.strip('\n')#.encode('utf-8')
+    print ("newsent type: ", type(newSent))
     filterList = re.findall(entityRe, newSent)
     newSentLength = len(newSent)
     chunk_list = []
