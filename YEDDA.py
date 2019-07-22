@@ -31,14 +31,27 @@ class Example(Frame):
         self.recommendFlag = True
         self.history = deque(maxlen=20)
         self.currentContent = deque(maxlen=1)
-        self.pressCommand = {'a':"Artifical",
-                             'b':"Event",
-                             'c':"Fin-Concept",
-                             'd':"Location",
-                             'e':"Organization",
-                             'f':"Person",
-                             'g':"Sector",
-                             'h':"Other"
+        self.pressCommand = {'a':"Communication2Driver-Other",
+                             'b':"Communication2Driver-Negative",
+                             'c':"long_ETA-Negative",
+                             'd':"product_ordered-Other",
+                             'e':"product_ordered-Negative",
+                             'f':"in_vehicle_issue-Other",
+                             'g':"in_vehicle_issue-Negative",
+                             'h': "Transaction Issue-Other",
+                             'i': "Transaction Issue-Negative",
+                             'j': "dropoffRelated-Other",
+                             'k': "dropoffRelated-Negative",
+                             'l': "UberSentiment-Other",
+                             'm': "UberSentiment-Negative",
+                             'n': "pickupRelated-Other",
+                             'o': "pickupRelated-Negative",
+                             'p': "system_app_issue-Other",
+                             'q': "system_app_issue-Negative",
+                             'r': "map_pudo_issue-Other",
+                             's': "map_pudo_issue-Negative",
+                             't': "Payment_issue-Other",
+                             'u': "Payment_issue-Negative"
                              }
         self.allKey = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self.controlCommand = {'q':"unTag", 'ctrl+z':'undo'}
@@ -483,10 +496,8 @@ class Example(Frame):
         aboveHalf_content = self.text.get('1.0',last_insert).encode('utf-8')
         followHalf_content = self.text.get(last_insert, "end-1c").encode('utf-8')
         if len(get_input) > 0:
-            print("**INFO** followHalf_content ", followHalf_content)
             followHalf_content = followHalf_content.replace(get_input, b'', 1)
         content = aboveHalf_content + followHalf_content
-        print ( "**INFO*** write some stuff.", )
         self.writeFile(self.fileName, content, last_insert)
 
 
@@ -705,9 +716,11 @@ class Example(Frame):
 
     ## show shortcut map
     def setMapShow(self):
+
         if os.path.isfile(self.configFile):
             with open (self.configFile, 'rb') as fp:
                 self.pressCommand = pickle.load(fp)
+
         hight = len(self.pressCommand)
         width = 2
         row = 0
@@ -727,7 +740,7 @@ class Example(Frame):
 
         for key in sorted(self.pressCommand):
             row += 1
-            # print "key: ", key, "  command: ", self.pressCommand[key]
+            print ("key: ", key, "  command: ", self.pressCommand[key])
             symbolLabel = Label(self, text =key.upper() + ": ", foreground="blue", font=(self.textFontStyle, 14, "bold"))
             symbolLabel.grid(row=row, column = self.textColumn +2,columnspan=1, rowspan = 1, padx = 3)
             self.shortcutLabelList.append(symbolLabel)
@@ -780,9 +793,9 @@ class Example(Frame):
                     line = removeRecommendContent(line, self.recommendRe)
                 wordTagPairs = getWordTagPairs(line, self.seged, self.tagScheme, self.onlyNP, self.goldAndrecomRe)
                 for wordTag in wordTagPairs:
-                    print( "***INFO***", wordTag)
+
                     seqFile.write(wordTag.decode('utf-8'))
-                ## use null line to seperate sentences
+                ## use null line to seperate sentencesƒ
                 seqFile.write('\n')
         seqFile.close()
         print("Exported file into sequence style in file: ",new_filename)
