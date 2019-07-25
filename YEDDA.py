@@ -33,25 +33,22 @@ class Example(Frame):
         self.currentContent = deque(maxlen=1)
         self.pressCommand = {'a':"Communication2Driver-Other",
                              'b':"Communication2Driver-Negative",
-                             'c':"long_ETA-Negative",
-                             'd':"product_ordered-Other",
-                             'e':"product_ordered-Negative",
-                             'f':"in_vehicle_issue-Other",
-                             'g':"in_vehicle_issue-Negative",
-                             'h': "Transaction Issue-Other",
-                             'i': "Transaction Issue-Negative",
-                             'j': "dropoffRelated-Other",
-                             'k': "dropoffRelated-Negative",
-                             'l': "UberSentiment-Other",
-                             'm': "UberSentiment-Negative",
-                             'n': "pickupRelated-Other",
-                             'o': "pickupRelated-Negative",
-                             'p': "system_app_issue-Other",
-                             'q': "system_app_issue-Negative",
-                             'r': "map_pudo_issue-Other",
-                             's': "map_pudo_issue-Negative",
-                             't': "Payment_issue-Other",
-                             'u': "Payment_issue-Negative"
+                             'c':"Communication2Driver-Churn",
+                             'd':"map_pudo_issue-Other",
+                             'e':"map_pudo_issue-Negative",
+                             'f':"map_pudo_issue-Churn",
+                             'g':"in_vehicle_issue-Other",
+                             'h': "in_vehicle_issue-Negative",
+                             'i': "in_vehicle_issue-Churn",
+                             'j': "payment_transaction_issue-Other",
+                             'k': "payment_transaction_issue-Negative",
+                             'l': "payment_transaction_issue-Churn",
+                             'm': "system_app_issue-Other",
+                             'n': "system_app_issue-Negative",
+                             'o': "system_app_issue-Churn",
+                             'r': "uber_sentiment-Other",
+                             's': "uber_sentiment-Negative",
+                             't': "uber_sentiment-Churn",
                              }
         self.allKey = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self.controlCommand = {'q':"unTag", 'ctrl+z':'undo'}
@@ -718,8 +715,8 @@ class Example(Frame):
     def setMapShow(self):
 
         if os.path.isfile(self.configFile):
-            with open (self.configFile, 'rb') as fp:
-                self.pressCommand = pickle.load(fp)
+           with open (self.configFile, 'rb') as fp:
+               self.pressCommand = pickle.load(fp)
 
         hight = len(self.pressCommand)
         width = 2
