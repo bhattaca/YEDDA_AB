@@ -31,24 +31,24 @@ class Example(Frame):
         self.recommendFlag = True
         self.history = deque(maxlen=20)
         self.currentContent = deque(maxlen=1)
-        self.pressCommand = {'a':"Communication2Driver-Other",
-                             'b':"Communication2Driver-Negative",
-                             'c':"Communication2Driver-Churn",
-                             'd':"map_pudo_issue-Other",
-                             'e':"map_pudo_issue-Negative",
-                             'f':"map_pudo_issue-Churn",
-                             'g':"in_vehicle_issue-Other",
-                             'h': "in_vehicle_issue-Negative",
-                             'i': "in_vehicle_issue-Churn",
-                             'j': "payment_transaction_issue-Other",
-                             'k': "payment_transaction_issue-Negative",
-                             'l': "payment_transaction_issue-Churn",
-                             'm': "system_app_issue-Other",
-                             'n': "system_app_issue-Negative",
-                             'o': "system_app_issue-Churn",
-                             'r': "uber_sentiment-Other",
-                             's': "uber_sentiment-Negative",
-                             't': "uber_sentiment-Churn",
+        self.pressCommand = {'a':"Comm2Driver-Other",
+                             'b':"Comm2Driver-Negative",
+                             'c':"Comm2Driver-Churn",
+                             'd':"map_pudo-Other",
+                             'e':"map_pudo-Negative",
+                             'f':"map_pudo-Churn",
+                             'g':"in_vehicle-Other",
+                             'h': "in_vehicle-Negative",
+                             'i': "in_vehicle-Churn",
+                             'j': "pymnt_trnsctn-Other",
+                             'k': "pymnt_trnsctn-Negative",
+                             'l': "pymnt_trnsctn-Churn",
+                             'm': "sys_app-Other",
+                             'n': "sys_app-Negative",
+                             'o': "sys_app-Churn",
+                             'r': "uber_sntmnt-Other",
+                             's': "uber_sntmnt-Negative",
+                             't': "uber_sntmnt-Churn",
                              }
         self.allKey = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         self.controlCommand = {'q':"unTag", 'ctrl+z':'undo'}
@@ -714,9 +714,9 @@ class Example(Frame):
     ## show shortcut map
     def setMapShow(self):
 
-        if os.path.isfile(self.configFile):
-           with open (self.configFile, 'rb') as fp:
-               self.pressCommand = pickle.load(fp)
+        #if os.path.isfile(self.configFile):
+        #   with open (self.configFile, 'rb') as fp:
+        #       self.pressCommand = pickle.load(fp)
 
         hight = len(self.pressCommand)
         width = 2
